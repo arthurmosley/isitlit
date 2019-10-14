@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Image } from 'react-native';
-import fire from './assets/fire.png';
-import MapView from 'react-native-maps';
+import Map from './screens/Map';
 
 export default function App() {
+  return <Map />;
+  /*
   return (
     <View style={{ flex: 1 }}>
       <MapView
@@ -14,10 +14,17 @@ export default function App() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      />
-      <View style={{ backgroundColor: '#f80', alignItems: 'center', height: 140 }}>
-        <Image source={fire} style={{ width: 100, height: 100, margin: 20 }} />
+      >
+      </MapView>
+      <View style={{
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        height: 140,
+        borderTopColor: '#000',
+        borderTopWidth: 2,
+      }}>
+        <Image source={icon} style={{ width: 100, height: 100, margin: 20 }} />
       </View>
    </View>
-  );
+  );*/
 }
