@@ -3,7 +3,7 @@ import React from 'react';
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 
-import { colors, units } from '../styles/theme';
+import { units } from '../styles/theme';
 import { Layout } from '../components/Layout';
 import { SingleColumn } from '../components/SingleColumn';
 import { Testimonial } from '../components/Testimonial';
@@ -35,9 +35,6 @@ const Slogan = styled.p`
   font-size: 1.5rem;
   margin: 0;
   text-align: center;
-`;
-
-const Description = styled.p`
 `;
 
 const IndexPage = () => (

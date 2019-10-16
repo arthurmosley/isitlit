@@ -24,6 +24,26 @@ export default function LitMap({ position, ...props }) {
         longitudeDelta: 0.9,
       }}
       {...props}
-    />
+    >
+      <MapView.Heatmap
+        points={[]}
+        radius={20}
+        opacity={0.7}
+        gradient={{
+          colors: [
+            '#00f',
+            '#0ff',
+            '#ff0',
+            '#f00',
+          ],
+          startPoints: [
+            0,
+            0.33333333,
+            0.66666666,
+            1,
+          ],
+        }}
+      />
+    </MapView>
   );
 }
