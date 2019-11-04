@@ -1,62 +1,53 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 
+import { getAllPoints, createPoint } from '../api';
 import LitMapView from '../components/LitMapView';
 import LitMapButton from '../components/LitMapButton';
+
+// Number of milliseconds between each refresh of the map.
+const LIT_MAP_REFRESH = 10000;
 
 export default class LitMap extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      latitude: 0,
-      longitude: 0,
-      points: []
-    };
+    this.refreshInterval = null;
+    this.state = { points: [] };
   }
 
   componentDidMount() {
-    this.fetchLitMap();
-
-    setInterval(() => {
-      this.fetchLitMap();
-    }, 1000);
+    this.refreshInterval = setInterval(() => {
+      this.refreshPoints();
+    }, LIT_MAP_REFRESH);
   }
 
-  fetchLitMap() {
-    fetch('http://localhost:3000/map')
-      .then(response => response.json())
-      .then(points => { this.refreshLitMap(points) });
+  componentWillUnmount() {
+    // Cleanup event listeners to prevent memory leaks.
+    clearInterval(this.refreshInterval);
   }
 
-  postPoint(point) {
-    const request = fetch('http://localhost:3000/itslit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(point)
+  refreshPoints() {
+    getAllPoints().then((points) => {
+      this.setState({ points });
     });
-    request
-      .then(response => response.json())
-      .then(points => { this.refreshLitMap(points) });
   }
 
-  refreshLitMap(points) {
-    this.setState({ points });
+  createPoint() {
+    Geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        createPoint({
+          latitude: latitude + 2 * Math.random(),
+          longitude: longitude + 2 * Math.random(),
+        }).then((points) => {
+          this.setState({ points });
+        });
+      },
+      () => {},
+      { enableHighAccuracy: true },
+    );
   }
-
-  handleLitMapButtonClick = () => {
-    /*
-    this.setState(state => ({
-      points: [
-        ...state.points,
-        {
-          latitude: state.latitude,
-          longitude: state.longitude,
-          weight: 1,
-        },
-      ],
-    }));*/
-  };
 
   render() {
     return (
@@ -67,23 +58,12 @@ export default class LitMap extends Component {
           alignItems: 'center',
         }}
       >
-        <LitMapView
-          points={this.state.points}
-        />
+        <LitMapView points={this.state.points} />
         <LitMapButton
-          onPress={this.handleLitMapButtonClick}
+          onPress={() => this.createPoint()}
           style={{ marginBottom: 50 }}
         />
       </View>
     );
   }
 }
-
-/**
- *         region={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-            latitudeDelta: 1,
-            longitudeDelta: 1,
-          }}
- */
