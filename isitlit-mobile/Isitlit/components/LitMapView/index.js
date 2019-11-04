@@ -4,12 +4,12 @@ import MapView, { PROVIDER_GOOGLE, Heatmap } from 'react-native-maps';
 import customMapStyle from './custom-map-style.json';
 
 const LitMapView = ({
-  region,
+  initialRegion,
   points,
 }) => (
   <MapView
     provider={PROVIDER_GOOGLE}
-    region={region}
+    initialRegion={initialRegion}
     style={{
       position: 'absolute',
       top: 0,
@@ -18,6 +18,7 @@ const LitMapView = ({
       bottom: 0,
     }}
     customMapStyle={customMapStyle}
+    showsUserLocation
   >
     {points.length > 0 &&
       <Heatmap points={points} />
