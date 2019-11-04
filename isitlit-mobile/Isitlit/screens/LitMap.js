@@ -15,7 +15,37 @@ export default class LitMap extends Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchLitMap();
+
+    setInterval(() => {
+      this.fetchLitMap();
+    }, 1000);
+  }
+
+  fetchLitMap() {
+    fetch('http://localhost:3000/map')
+      .then(response => response.json())
+      .then(points => { this.refreshLitMap(points) });
+  }
+
+  postPoint(point) {
+    const request = fetch('http://localhost:3000/itslit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(point)
+    });
+    request
+      .then(response => response.json())
+      .then(points => { this.refreshLitMap(points) });
+  }
+
+  refreshLitMap(points) {
+    this.setState({ points });
+  }
+
   handleLitMapButtonClick = () => {
+    /*
     this.setState(state => ({
       points: [
         ...state.points,
@@ -25,8 +55,8 @@ export default class LitMap extends Component {
           weight: 1,
         },
       ],
-    }));
-  }
+    }));*/
+  };
 
   render() {
     return (
@@ -38,12 +68,6 @@ export default class LitMap extends Component {
         }}
       >
         <LitMapView
-          region={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-            latitudeDelta: 1,
-            longitudeDelta: 1,
-          }}
           points={this.state.points}
         />
         <LitMapButton
@@ -54,3 +78,12 @@ export default class LitMap extends Component {
     );
   }
 }
+
+/**
+ *         region={{
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            latitudeDelta: 1,
+            longitudeDelta: 1,
+          }}
+ */

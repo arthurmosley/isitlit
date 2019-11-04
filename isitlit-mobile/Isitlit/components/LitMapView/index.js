@@ -20,9 +20,9 @@ const LitMapView = ({
     customMapStyle={customMapStyle}
     showsUserLocation
   >
-    <Heatmap
-      points={points}
-    />
+    {points.length > 0 &&
+      <Heatmap points={points} />
+    }
   </MapView>
 );
 
