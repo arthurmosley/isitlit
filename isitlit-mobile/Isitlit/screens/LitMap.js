@@ -39,9 +39,7 @@ export default class LitMap extends Component {
 
     // Set initial region of the map to the user's current location as soon
     // as it is available.
-    alert("About to get position");
     const { latitude, longitude } = await getCurrentPosition();
-    alert("latitude: " + latitude + "longitude: " + longitude);
     this.setState({
       initialRegion: {
         latitude,
@@ -68,7 +66,6 @@ export default class LitMap extends Component {
     // Creates a point at the current position and reloads the map once the
     // server has responded with an updated list of points.
     getCurrentPosition().then(({ latitude, longitude }) => {
-      alert("About to create point with latitude: " + latitude + " and longitude: " + longitude);
       return createPoint({
         latitude: latitude - 1 + 2 * Math.random(),
         longitude: longitude - 1 + 2 * Math.random(),
