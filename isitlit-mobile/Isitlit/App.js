@@ -5,31 +5,29 @@
 
 import 'react-native-gesture-handler';
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, Image } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Settings from './screens/SettingsScreen';
 import LitMapScreen from './screens/LitMapScreen';
 import LitPointsScreen from './screens/LitPointsScreen';
 
+import mapIcon from './assets/map-icon.png';
+import listIcon from './assets/list-icon.png';
+
 const tabs = {
-  //Settings: { screen: Settings },
   LitMap: { screen: LitMapScreen },
   LitPoints: { screen: LitPointsScreen },
 };
 
 const tabLabels = {
-  Settings: 'Settings',
   LitMap: 'Map',
   LitPoints: 'Saved',
 };
 
-const tabIcons = {
-  Settings: 'ios-settings',
-  LitMap: 'ios-navigate',
-  LitPoints: 'ios-star',
+const tabSources = {
+  LitMap: mapIcon,
+  LitPoints: listIcon,
 };
 
 const TabNavigator = createBottomTabNavigator(
@@ -40,14 +38,18 @@ const TabNavigator = createBottomTabNavigator(
       const Label = ({ tintColor }) => (
         <Text style={{ color: tintColor }}>{tabLabels[routeName]}</Text>
       );
-      /*
-      const Icon = ({ tintColor }) => (
-        <Ionicons name={tabIcons[routeName]} size={24} color={tintColor} />
-      );*/
+      const Icon = () => (
+        <Image
+          source={tabSources[routeName]}
+          style={{
+            width: 24,
+            height: 24,
+          }}
+        />
+      );
       return {
         tabBarLabel: Label,
-        tabBarIcon: null,
-        //tabBarIcon: Icon,
+        tabBarIcon: Icon,
       };
     },
     tabBarOptions: {

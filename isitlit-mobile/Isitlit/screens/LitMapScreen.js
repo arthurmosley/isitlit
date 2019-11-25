@@ -9,7 +9,7 @@ import { View } from 'react-native';
 
 import { getCurrentPosition } from '../geo';
 import { getAllPoints, createPoint } from '../api';
-import { addSavedPoint, getSavedPoints, hasLaunched } from '../storage';
+import { setSavedPoints, getSavedPoints, hasLaunched } from '../storage';
 import LitMapView from '../components/LitMapView';
 import LitMapButton from '../components/LitMapButton';
 import LitMapInstructionModal from '../components/LitMapInstructionModal';
@@ -69,6 +69,10 @@ export default class LitMapScreen extends Component {
     getAllPoints().then((points) => {
       this.setState({ points });
     });
+
+    getSavedPoints().then((savedPoints) => {
+      this.setState({ savedPoints });
+    });
   }
 
   createPoint() {
@@ -85,13 +89,16 @@ export default class LitMapScreen extends Component {
   }
 
   addSavedPoint({ latitude, longitude }) {
-    addSavedPoint({
-      latitude,
-      longitude,
-      time: new Date().toLocaleString(),
-    }).then((savedPoints) => {
-      this.setState({ savedPoints });
-    });
+    const newSavedPoints = [
+      ...this.state.savedPoints,
+      {
+        latitude,
+        longitude,
+        time: new Date().toLocaleString(),
+      },
+    ];
+    this.setState({ savedPoints: newSavedPoints });
+    setSavedPoints(newSavedPoints);
   }
 
   closeInstructions() {
