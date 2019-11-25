@@ -51,18 +51,24 @@ const LitPointsScreen = () => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <FlatList
-        data={points}
-        renderItem={({ item: { latitude, longitude, time }, index }) => (
-          <LitPoint
-            latitude={latitude}
-            longitude={longitude}
-            time={time}
-            onDelete={() => deletePoint(index)}
-          />
-        )}
-        keyExtractor={(_, i) => i.toString()}
-      />
+      {points.length > 0 ? (
+        <FlatList
+          data={points}
+          renderItem={({ item: { latitude, longitude, time }, index }) => (
+            <LitPoint
+              latitude={latitude}
+              longitude={longitude}
+              time={time}
+              onDelete={() => deletePoint(index)}
+            />
+          )}
+          keyExtractor={(_, i) => i.toString()}
+        />
+      ) : (
+        <Text style={{ margin: 20, fontSize: 20 }}>
+          You don't have any saved points yet! Click anywhere on the map to save a point.
+        </Text>
+      )}
     </SafeAreaView>
   );
 };

@@ -9,9 +9,10 @@ import { View } from 'react-native';
 
 import { getCurrentPosition } from '../geo';
 import { getAllPoints, createPoint } from '../api';
-import { addSavedPoint, getSavedPoints } from '../storage';
+import { addSavedPoint, getSavedPoints, hasLaunched } from '../storage';
 import LitMapView from '../components/LitMapView';
 import LitMapButton from '../components/LitMapButton';
+import LitMapInstructionModal from '../components/LitMapInstructionModal';
 
 // Number of milliseconds between each refresh of the map.
 const LIT_MAP_REFRESH = 5000;
@@ -22,6 +23,7 @@ export default class LitMapScreen extends Component {
 
     this.refreshInterval = null;
     this.state = {
+      instructionsVisible: false,
       initialRegion: undefined,
       points: [],
       savedPoints: [],
@@ -50,6 +52,11 @@ export default class LitMapScreen extends Component {
     // Get the list of saved points.
     const savedPoints = await getSavedPoints();
     this.setState({ savedPoints });
+
+    // Determine whether instructions should be shown.
+    if (!(await hasLaunched())) {
+      this.setState({ instructionsVisible: true });
+    }
   }
 
   componentWillUnmount() {
@@ -87,6 +94,10 @@ export default class LitMapScreen extends Component {
     });
   }
 
+  closeInstructions() {
+    this.setState({ instructionsVisible: false });
+  }
+
   render() {
     return (
       <View
@@ -96,6 +107,10 @@ export default class LitMapScreen extends Component {
           alignItems: 'center',
         }}
       >
+        <LitMapInstructionModal
+          visible={this.state.instructionsVisible}
+          onClose={() => this.closeInstructions()}
+        />
         <LitMapView
           initialRegion={this.state.initialRegion}
           points={this.state.points}
