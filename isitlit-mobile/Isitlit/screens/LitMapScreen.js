@@ -1,25 +1,22 @@
+/**
+ * This screens shows the map view for the application. This includes the custom
+ * Google map interface as well as the custom user interface components that
+ * are overlayed.
+ */
+
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
 
+import { getCurrentPosition } from '../geo';
 import { getAllPoints, createPoint } from '../api';
+import { addSavedPoint, getSavedPoints } from '../storage';
 import LitMapView from '../components/LitMapView';
 import LitMapButton from '../components/LitMapButton';
-
-async function getCurrentPosition() {
-  return new Promise((resolve, reject) => {
-    Geolocation.getCurrentPosition(
-      ({ coords }) => { resolve(coords) },
-      (error) => { reject(error) },
-      { enableHighAccuracy: true },
-    );
-  });
-}
 
 // Number of milliseconds between each refresh of the map.
 const LIT_MAP_REFRESH = 5000;
 
-export default class LitMap extends Component {
+export default class LitMapScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -27,6 +24,7 @@ export default class LitMap extends Component {
     this.state = {
       initialRegion: undefined,
       points: [],
+      savedPoints: [],
     };
   }
 
@@ -48,6 +46,10 @@ export default class LitMap extends Component {
         longitudeDelta: 1,
       },
     });
+
+    // Get the list of saved points.
+    const savedPoints = await getSavedPoints();
+    this.setState({ savedPoints });
   }
 
   componentWillUnmount() {
@@ -75,6 +77,16 @@ export default class LitMap extends Component {
     });
   }
 
+  addSavedPoint({ latitude, longitude }) {
+    addSavedPoint({
+      latitude,
+      longitude,
+      time: new Date().toLocaleString(),
+    }).then((savedPoints) => {
+      this.setState({ savedPoints });
+    });
+  }
+
   render() {
     return (
       <View
@@ -87,6 +99,8 @@ export default class LitMap extends Component {
         <LitMapView
           initialRegion={this.state.initialRegion}
           points={this.state.points}
+          onPress={event => this.addSavedPoint(event.nativeEvent.coordinate)}
+          savedPoints={this.state.savedPoints}
         />
         <LitMapButton
           onPress={() => this.createPoint()}
