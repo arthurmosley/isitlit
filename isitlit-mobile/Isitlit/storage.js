@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const HAS_LAUNCHED = 'HAS_LAUNCHED';
 const SAVED_POINTS = 'SAVED_POINTS';
