@@ -1,5 +1,10 @@
+/**
+ * This component extends the MapView provided by 'react-native-maps' with our
+ * own custom functionality.
+ */
+
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE, Heatmap, Marker, Circle } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Heatmap, Marker } from 'react-native-maps';
 
 import customMapStyle from './custom-map-style.json';
 

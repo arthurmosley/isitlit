@@ -8,6 +8,11 @@ import { FlatList, SafeAreaView, Text, View, Button } from 'react-native';
 
 import { getSavedPoints, setSavedPoints } from '../storage';
 
+/**
+ * Shows the list item for a single favorited point. This includes the
+ * latitude/longitude location, the time of creation, and a delete button to
+ * remove the item from the list.
+ */
 const LitPoint = ({ latitude, longitude, time, onDelete }) => {
   return (
     <View
@@ -36,6 +41,10 @@ const LitPoint = ({ latitude, longitude, time, onDelete }) => {
   );
 }
 
+/**
+ * Shows a list of all of the saved points. When a user delets a point, syncs
+ * this information with locale storage.
+ */
 const LitPointsScreen = () => {
   const [points, setPoints] = useState([]);
   useEffect(() => {

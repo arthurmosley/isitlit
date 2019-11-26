@@ -15,21 +15,25 @@ import LitPointsScreen from './screens/LitPointsScreen';
 import mapIcon from './assets/map-icon.png';
 import listIcon from './assets/list-icon.png';
 
+// Assocation between route names and route screens.
 const tabs = {
   LitMap: { screen: LitMapScreen },
   LitPoints: { screen: LitPointsScreen },
 };
 
+// Associate between route names and their label on the tab bar.
 const tabLabels = {
   LitMap: 'Map',
   LitPoints: 'Saved',
 };
 
+// Association betwene route names and their icon on the tab bar.
 const tabSources = {
   LitMap: mapIcon,
   LitPoints: listIcon,
 };
 
+// Navigator item controls the tab bar at the bottom of the application.
 const TabNavigator = createBottomTabNavigator(
   tabs,
   {

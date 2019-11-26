@@ -1,13 +1,19 @@
+/**
+ * This component shows the instructions at the first application launch.
+ */
+
 import React from 'react';
 import { Button, Modal, Text, View, SafeAreaView, Image } from 'react-native';
 
 import litMapButtonSource from '../assets/lit-map-button.png';
 
+// Paragraph styling.
 const paragraph = {
   fontSize: 20,
   marginBottom: 20,
 };
 
+// Modal element.
 const LitMapInstructionModal = ({ visible, onClose }) => (
   <Modal
     animationType="slide"

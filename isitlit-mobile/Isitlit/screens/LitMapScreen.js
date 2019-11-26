@@ -88,6 +88,9 @@ export default class LitMapScreen extends Component {
     });
   }
 
+  /**
+   * Adds a point to the list of saved points and saves it to local storage.
+   */
   addSavedPoint({ latitude, longitude }) {
     const newSavedPoints = [
       ...this.state.savedPoints,
@@ -101,6 +104,9 @@ export default class LitMapScreen extends Component {
     setSavedPoints(newSavedPoints);
   }
 
+  /**
+   * Closes the instructions screen.
+   */
   closeInstructions() {
     this.setState({ instructionsVisible: false });
   }
