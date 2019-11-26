@@ -24,3 +24,18 @@
 5. In a new terminal, run `react-native run-android` or `react-native run-ios` to build and deploy the app.
 
 6. In a new terminal, navigate to the api folder isitlit/isilit-api and run `node index.js` to start a node server.
+
+### Code Navigation
+
+#### isitlit-api
+
+- Contains the code necessary to startup an instance of the node server
+- Node server is used for temporary storage of location data and points of interest
+
+#### isitlit-mobile
+
+- Contains the application code for the Android & IOS versions of the app
+- Components
+  - LitMapView: contains the definition and themes for the LitMap
+  - LitMapButton: Defines the dimensions and touch funcionality of the LitMapButton
+  - LitMapInstructions: Defines the user instructions for the app that appear on the first installation 
