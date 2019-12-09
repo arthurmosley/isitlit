@@ -9,11 +9,16 @@
 import { Platform } from 'react-native';
 
 // Machine localhost from Android simulator is the special IP "10.0.0.2".
+/*
 export const BASE_URL = (
   Platform.OS === 'android'
     ? 'http://10.0.2.2:3000'
     : 'http://localhost:3000'
 );
+*/
+
+// AWS!!!
+export const BASE_URL = 'http://54.152.111.88:3000';
 
 // Fetches all points on the map.
 export async function getAllPoints() {
