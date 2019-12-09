@@ -59,9 +59,16 @@ const IndexPage = () => (
       </Testimonial>
       <Testimonial>
         <Testimonial.Quote>
-          Why would I ever use this?
+          I came to RPI as a transfer student and with the help of this app
+          I made friends left and right in a matter of days!
         </Testimonial.Quote>
-        <Testimonial.Author>a very anti-fun person</Testimonial.Author>
+        <Testimonial.Author>Numfor Chiaso'oh Mbiziwo-Tiapo</Testimonial.Author>
+      </Testimonial>
+      <Testimonial>
+        <Testimonial.Quote>
+          Is it lit?
+        </Testimonial.Quote>
+        <Testimonial.Author>John Sturman</Testimonial.Author>
       </Testimonial>
     </SingleColumn>
   </Layout>
