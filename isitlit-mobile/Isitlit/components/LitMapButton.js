@@ -1,3 +1,8 @@
+/**
+ * This component is the custom "fire" button that shows up on top of the
+ * LitMap.
+ */
+
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 

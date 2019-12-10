@@ -1,11 +1,18 @@
+/**
+ * This component extends the MapView provided by 'react-native-maps' with our
+ * own custom functionality.
+ */
+
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE, Heatmap } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Heatmap, Marker } from 'react-native-maps';
 
 import customMapStyle from './custom-map-style.json';
 
 const LitMapView = ({
   initialRegion,
   points,
+  savedPoints,
+  onPress,
 }) => (
   <MapView
     provider={PROVIDER_GOOGLE}
@@ -19,10 +26,17 @@ const LitMapView = ({
     }}
     customMapStyle={customMapStyle}
     showsUserLocation
+    onPress={onPress}
   >
     {points.length > 0 &&
       <Heatmap points={points} />
     }
+    {savedPoints.map(({ latitude, longitude }, i) => (
+      <Marker
+        key={i}
+        coordinate={{ latitude, longitude }}
+      />
+    ))}
   </MapView>
 );
 
